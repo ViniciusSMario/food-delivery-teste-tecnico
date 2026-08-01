@@ -171,13 +171,8 @@ Todo erro (400, 401, 404, 409, 500) segue o mesmo formato:
 
 O campo `campos` só aparece em erros de validação de formulário.
 
-## Possíveis melhorias
+## Escopo
 
-- **Cadastro de clientes reaproveitável:** hoje `cliente` é um texto livre digitado a cada pedido. Uma entidade `Cliente` própria (com histórico de pedidos, telefone, endereço padrão) evitaria redigitação e inconsistência de nome entre pedidos do mesmo cliente.
-- **Perfis entre administradores:** hoje qualquer usuário autenticado tem acesso total (criar, listar, alterar status de qualquer pedido). Em um cenário com mais de um administrador, papéis (ex: atendente vs. gerente) poderiam restringir quem altera status ou cancela pedidos.
-- **Máquina de estados no status do pedido:** a transição de status não é validada (é possível ir de `ENTREGUE` de volta para `RECEBIDO`). Uma regra de transições válidas evitaria estados inconsistentes.
-- **Paginação na listagem de pedidos:** `GET /pedidos` retorna a lista inteira do usuário. Não é um problema em baixo volume, mas não escala indefinidamente.
-- **Testes automatizados:** o projeto foi validado manualmente (via `curl`) a cada etapa, mas não há suíte de testes automatizados (unitários ou de integração) no repositório.
-- **CI:** não há pipeline de build/teste automatizado configurado.
-- **Refresh token:** o JWT expira em 24h sem mecanismo de renovação; o usuário precisa logar novamente após expirar.
-- **Tela de edição de pedido:** hoje só é possível criar um pedido e mudar seu status — não editar itens ou endereço depois de criado.
+Este projeto foi desenvolvido como um desafio técnico, dimensionado para poucas horas de trabalho, e cobre integralmente o que foi pedido: autenticação, CRUD de pedidos com os status definidos, persistência em SQLite e o frontend em React.
+
+Itens como cadastro de clientes reaproveitável, perfis de acesso entre administradores, máquina de estados na transição de status, paginação, testes automatizados, CI, refresh token e edição de pedido após criado ficaram fora do escopo. São decisões deliberadas para este teste — não lacunas por desconhecimento — e seriam naturalmente endereçadas em um cenário real de produção, com prazo e contexto de negócio para justificá-las.

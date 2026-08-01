@@ -8,13 +8,16 @@ import DetalhePedido from '../pages/pedidos/DetalhePedido'
 import ListaPedidos from '../pages/pedidos/ListaPedidos'
 import NovoPedido from '../pages/pedidos/NovoPedido'
 import RotaPrivada from './RotaPrivada'
+import RotaPublica from './RotaPublica'
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route element={<LayoutPublico />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Register />} />
+      <Route element={<RotaPublica />}>
+        <Route element={<LayoutPublico />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Register />} />
+        </Route>
       </Route>
 
       <Route element={<RotaPrivada />}>

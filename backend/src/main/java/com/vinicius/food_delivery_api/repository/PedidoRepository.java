@@ -8,9 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-    @EntityGraph(attributePaths = {"cliente", "itens"})
-    List<Pedido> findByClienteEmail(String email);
+    @Override
+    @EntityGraph(attributePaths = "itens")
+    List<Pedido> findAll();
 
-    @EntityGraph(attributePaths = {"cliente", "itens"})
-    Optional<Pedido> findByIdAndClienteEmail(Long id, String email);
+    @Override
+    @EntityGraph(attributePaths = "itens")
+    Optional<Pedido> findById(Long id);
 }

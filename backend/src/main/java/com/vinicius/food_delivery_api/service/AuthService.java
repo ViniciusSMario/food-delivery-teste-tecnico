@@ -8,6 +8,7 @@ import com.vinicius.food_delivery_api.exception.EmailJaCadastradoException;
 import com.vinicius.food_delivery_api.repository.UsuarioRepository;
 import com.vinicius.food_delivery_api.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +35,14 @@ public class AuthService {
         usuario.setEmail(request.email());
         usuario.setSenha(passwordEncoder.encode(request.senha()));
 
-        Usuario salvo = usuarioRepository.save(usuario);
-        return new AuthResponse(jwtService.gerarToken(salvo.getEmail()));
+        try {
+            Usuario salvo = usuarioRepository.save(usuario);
+            return new AuthResponse(jwtService.gerarToken(salvo.getEmail()));
+        } catch (DataIntegrityViolationException e) {
+            // Corrida entre o existsByEmail acima e este save: outra requisicao
+            // cadastrou o mesmo e-mail nesse meio-tempo e a constraint unique pegou.
+            throw new EmailJaCadastradoException(request.email());
+        }
     }
 
     public AuthResponse login(LoginRequest request) {

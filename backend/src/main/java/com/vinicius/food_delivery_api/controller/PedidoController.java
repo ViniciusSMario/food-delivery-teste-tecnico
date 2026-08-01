@@ -8,8 +8,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,26 +26,23 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PedidoResponse criar(@RequestBody @Valid PedidoRequest request,
-                                @AuthenticationPrincipal UserDetails clienteAutenticado) {
-        return pedidoService.criar(request, clienteAutenticado.getUsername());
+    public PedidoResponse criar(@RequestBody @Valid PedidoRequest request) {
+        return pedidoService.criar(request);
     }
 
     @GetMapping
-    public List<PedidoResponse> listar(@AuthenticationPrincipal UserDetails clienteAutenticado) {
-        return pedidoService.listar(clienteAutenticado.getUsername());
+    public List<PedidoResponse> listar() {
+        return pedidoService.listar();
     }
 
     @GetMapping("/{id}")
-    public PedidoResponse buscarPorId(@PathVariable Long id,
-                                      @AuthenticationPrincipal UserDetails clienteAutenticado) {
-        return pedidoService.buscarPorId(id, clienteAutenticado.getUsername());
+    public PedidoResponse buscarPorId(@PathVariable Long id) {
+        return pedidoService.buscarPorId(id);
     }
 
     @PutMapping("/{id}/status")
     public PedidoResponse atualizarStatus(@PathVariable Long id,
-                                          @RequestBody @Valid AtualizarStatusRequest request,
-                                          @AuthenticationPrincipal UserDetails clienteAutenticado) {
-        return pedidoService.atualizarStatus(id, request, clienteAutenticado.getUsername());
+                                          @RequestBody @Valid AtualizarStatusRequest request) {
+        return pedidoService.atualizarStatus(id, request);
     }
 }

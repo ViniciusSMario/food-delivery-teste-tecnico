@@ -98,7 +98,10 @@ export default function DetalhePedido() {
           <List disablePadding>
             {pedido.itens.map((item) => (
               <ListItem key={item.id} disableGutters>
-                <ListItemText primary={item.nome} secondary={`Quantidade: ${item.quantidade}`} />
+                <ListItemText
+                  primary={item.nome}
+                  secondary={`Quantidade: ${item.quantidade} × ${formatarMoeda(item.preco)}`}
+                />
                 <Typography variant="body2">{formatarMoeda(item.quantidade * item.preco)}</Typography>
               </ListItem>
             ))}

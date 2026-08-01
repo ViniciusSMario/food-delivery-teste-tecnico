@@ -8,6 +8,9 @@ import java.util.List;
 public record PedidoRequest(
 
         @NotBlank
+        String cliente,
+
+        @NotBlank
         String enderecoEntrega,
 
         @NotEmpty

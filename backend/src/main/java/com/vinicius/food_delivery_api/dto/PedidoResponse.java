@@ -7,7 +7,7 @@ import java.util.List;
 public record PedidoResponse(
 
         Long id,
-        UsuarioResponse cliente,
+        String cliente,
         String enderecoEntrega,
         StatusPedido status,
         LocalDateTime dataCriacao,

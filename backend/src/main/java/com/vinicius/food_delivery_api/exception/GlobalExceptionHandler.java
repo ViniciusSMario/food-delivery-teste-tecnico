@@ -70,12 +70,6 @@ public class GlobalExceptionHandler {
 
     // ----- 404 -----
 
-    @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    public ResponseEntity<ErroResponse> tratarUsuarioNaoEncontrado(UsuarioNaoEncontradoException e,
-                                                                   HttpServletRequest request) {
-        return construir(HttpStatus.NOT_FOUND, e.getMessage(), request);
-    }
-
     @ExceptionHandler(PedidoNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> tratarPedidoNaoEncontrado(PedidoNaoEncontradoException e,
                                                                   HttpServletRequest request) {
